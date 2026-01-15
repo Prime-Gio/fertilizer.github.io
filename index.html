@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard for tracking fertilizer usage and tank levels.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js"></script>
+    <title>Fertilizer Tracker</title>
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>Fertilizer Tracker</h1>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div class="table-wrapper">
+            <table class="tracker-table">
+                
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-section">Section</th>
+                        <th scope="col" class="col-status">Status</th>
+                            <div class="header-with-toggle">
+                                Status
+                                <label class="toggle-switch" title="Auto-sort ON items to top">
+                                    <input type="checkbox" id="sort-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        <th scope="col" class="col-amount">Amount (Gal)</th>
+                        <th scope="col" class="col-time">Time</th>
+                        <th scope="col" class="col-actions">Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody id="fertilizer-data-body">
+                    
+                    <tr class="data-row">
+                        <td class="cell-section">
+                            <input 
+                                type="text" 
+                                class="input-field input-text" 
+                                name="section_name[]" 
+                                placeholder="e.g., North Field"
+                                aria-label="Section Name">
+                        </td>
+
+                        <td class="cell-status">
+                            <div class="select-wrapper">
+                                <select class="input-field input-select" name="status[]" aria-label="Status">
+                                    <option value="ON">ON</option>
+                                    <option value="OFF" selected>OFF</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td class="cell-amount">
+                            <input 
+                                type="number" 
+                                class="input-field input-number" 
+                                name="tank_level[]" 
+                                placeholder="0" 
+                                min="0" 
+                                max="3000"
+                                step="250"
+                                aria-label="Tank Level in Gallons">
+                        </td>
+
+                        <td class="cell-time">
+                            <input 
+                                type="time" 
+                                class="input-field input-time" 
+                                name="time_log[]"
+                                aria-label="Time Logged">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button id="add-row-btn" class="btn-primary">+ Add New Section</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
