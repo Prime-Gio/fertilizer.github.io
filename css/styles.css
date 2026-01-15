@@ -1,0 +1,502 @@
+:root {
+  /* --- Modern Color Palette --- */
+  --primary-color: #2E7D32;    /* Agricultural Green - Professional */
+  --primary-light: #E8F5E9;    /* Soft Green Background */
+  --accent-color: #4CAF50;     /* Bright Green for highlights */
+  --text-dark: #1F2937;        /* Almost Black for main text */
+  --text-light: #6B7280;       /* Grey for secondary text */
+  --bg-body: #F3F4F6;          /* Light Grey Dashboard Background */
+  --bg-white: #FFFFFF;         /* Card White */
+  
+  /* --- Borders & Shadows --- */
+  --border-radius: 12px;
+  --input-radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  
+  /* --- Transitions --- */
+  --transition: all 0.2s ease-in-out;
+}
+
+/* --- Global Reset & Typography --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-dark);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* --- Header Styling --- */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: -0.5px;
+}
+
+/* --- Main Layout Container --- */
+.dashboard-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--bg-white);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Table Wrapper (Crucial for Mobile) --- */
+/* This allows the table to scroll sideways on phones without breaking the page */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+  margin-top: 10px;
+}
+
+/* --- Table Styling --- */
+.tracker-table {
+  width: 100%;
+  border-collapse: separate; /* Allows border-radius on rows/cells */
+  border-spacing: 0;
+  min-width: 600px; /* Forces scroll on small screens */
+}
+
+.tracker-table th {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--bg-body);
+}
+
+.tracker-table td {
+  padding: 12px 10px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--bg-body);
+}
+
+.tracker-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Input & Select Styling --- */
+.cell-section { text-align: center; 
+}
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: var(--input-radius);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  background-color: #FAFAFA;
+  transition: var(--transition);
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--accent-color);
+  background-color: var(--bg-white);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Unique styling for Select dropdown to look cleaner */
+.select-wrapper {
+  position: relative;
+}
+
+.input-select {
+  appearance: none; /* Removes default ugly arrow */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234CAF50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Status-based text coloring could be added via JS later, 
+   but for now we style the dropdown itself to look pill-shaped */
+.input-select {
+  background-color: var(--primary-light);
+  border-color: transparent;
+  color: var(--primary-color);
+  border-radius: 50px; /* Pill shape */
+  padding-left: 15px;
+}
+
+/* Number Inputs - Align right for math-feel */
+.input-number {
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace; /* Monospace for alignment */
+  font-weight: 700;
+}
+
+/* Time Input */
+.input-time {
+  text-align: center;
+  color: var(--text-light);
+}
+
+/* --- Column Width Control --- */
+.col-section { width: 20%; }
+.col-status { width: 20%; }
+.col-amount { width: 20%; }
+.col-time { width: 20%; }
+
+/* --- Active State (Triggered by JS) --- */
+.data-row {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.data-row.active-row {
+    background-color: #E8F5E9; /* Light Green background when ON */
+    border-left: 4px solid var(--primary-color);
+}
+
+.data-row.active-row .input-field {
+    background-color: #fff; /* Keep inputs white so they are readable */
+    border-color: var(--accent-color);
+}
+
+/* --- Controls & Buttons --- */
+.controls {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background-color: #1B5E20; /* Darker green */
+}
+
+/* Delete Button (Small 'X') */
+.cell-actions {
+    text-align: center;
+    width: 50px;
+}
+
+.btn-delete {
+
+    background: none;
+    border: none;
+    color: #ef4444; /* Red */
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.5;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* --- Active State (Triggered by JS) --- */
+.data-row {
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.data-row.active-row {
+    background-color: #E8F5E9; /* Light Green background when ON */
+    border-left: 4px solid var(--primary-color);
+}
+
+.data-row.active-row .input-field {
+    background-color: #fff; /* Keep inputs white so they are readable */
+    border-color: var(--accent-color);
+}
+
+/* --- Controls & Buttons --- */
+.controls {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background-color: #1B5E20; /* Darker green */
+}
+
+/* Delete Button (Small 'X') */
+.cell-actions {
+    text-align: center;
+    width: 50px;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #ef4444; /* Red */
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.5;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+data-row {
+    /* Smooths out the background color change to green */
+    transition: background-color 0.5s ease; 
+}
+/* Header alignment */
+.header-with-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- The Switch Container --- */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+}
+
+/* Hide default HTML checkbox */
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The Slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; /* Grey when OFF */
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* ON State (Green) */
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+/* Move the circle when checked */
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* --- Swipe to Delete Styling --- */
+
+/* The row container needs relative positioning */
+.data-row {
+    position: relative;
+    overflow: hidden; /* Hide the button if it's off-screen */
+}
+
+/* The actual content of the row (Top Layer) */
+.row-content {
+    position: relative;
+    background-color: var(--bg-white);
+    z-index: 2; /* Sits on top */
+    transition: transform 0.2s ease-out; /* Smooth sliding */
+    width: 100%;
+    display: flex; /* Flexbox to mimic table cells if needed, or wrap TR content */
+}
+
+/* Since <tr> can't easily handle 'layers', 
+   the best practice for swipe-delete in tables is to 
+   make the Delete button absolute inside the last cell 
+   or handle the transform on the whole TR */
+
+.data-row {
+    /* We will slide the entire TR using JS transform */
+    background-color: var(--bg-white);
+    /* Essential to separate row from the red background underneath */
+}
+
+/* The Swipe Background (Red Reveal) */
+.swipe-reveal-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background-color: #ff3b30; /* Bright Red */
+    z-index: 1; /* Behind the row */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align icon to right */
+    padding-right: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    pointer-events: none; /* Let clicks pass through */
+}
+
+.swipe-reveal-bg::after {
+    content: "Delete"; /* Text to show */
+}
+
+/* --- Mobile View & Compact Grid --- */
+@media (max-width: 768px) {
+
+  /* 1. LAYOUT RESET */
+  /* Reduce padding on the main container so content has more room */
+  .dashboard-container {
+    padding: 10px; /* Reduced from 25px */
+    width: 100%;
+    overflow: hidden; /* Prevents horizontal scroll on the container itself */
+  }
+
+  /* 2. TABLE RESET (CRITICAL FIX) */
+  .tracker-table {
+    display: block;
+    width: 100%;
+    min-width: 0; /* <--- THIS FIXES THE CUT OFF. Overrides the 600px limit. */
+  }
+
+  .tracker-table tbody, 
+  .tracker-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .tracker-table thead {
+    display: none; 
+  }
+
+  /* 3. CARD GRID LAYOUT */
+  .tracker-table tr.data-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 8px 12px;
+    
+    background-color: var(--bg-white);
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    
+    /* Ensure the card itself doesn't overflow */
+    box-sizing: border-box; 
+    width: 100%; 
+  }
+
+  /* 4. FIELD POSITIONING */
+  
+  /* Section Name (Top - Full Width) */
+  .tracker-table td:nth-of-type(1) {
+    grid-column: 1 / -1; 
+    padding: 0;
+  }
+
+  /* Status (Middle - Left) */
+  .tracker-table td:nth-of-type(2) {
+    grid-column: 1 / 2;
+    padding: 0;
+  }
+
+  /* Amount (Middle - Right) */
+  .tracker-table td:nth-of-type(3) {
+    grid-column: 2 / 3;
+    padding: 0;
+  }
+
+  /* Time (Bottom - Full Width) */
+  .tracker-table td:nth-of-type(4) {
+    grid-column: 1 / -1;
+    padding: 0;
+  }
+
+  /* 5. LABELS */
+  .tracker-table td::before {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #9CA3AF; 
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .tracker-table td:nth-of-type(1)::before { content: "Section Name"; }
+  .tracker-table td:nth-of-type(2)::before { content: "Status"; }
+  .tracker-table td:nth-of-type(3)::before { content: "Amount (Gal)"; }
+  .tracker-table td:nth-of-type(4)::before { content: "Time Logged"; }
+
+  /* 6. DELETE BUTTON */
+  .tracker-table td:last-child {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: auto;
+  }
+
+  .tracker-table td:last-child::before { display: none; }
+
+  .btn-delete {
+    font-size: 1.4rem;
+    color: #ef4444; 
+    padding: 5px;
+  }
+
+  /* 7. TOOLBAR ADJUSTMENT */
+  /* Since we changed container padding to 10px, we adjust margins to match */
+  .mobile-toolbar {
+    margin: -10px -10px 15px -10px; /* Matches the new container padding */
+    padding: 10px 15px;
+  }
+}
